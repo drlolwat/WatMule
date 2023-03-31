@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="WatMule:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/WatMule_jar</output-path>
+    <root id="archive" name="WatMule.jar">
+      <element id="module-output" name="WatMule" />
+    </root>
+  </artifact>
+</component>
