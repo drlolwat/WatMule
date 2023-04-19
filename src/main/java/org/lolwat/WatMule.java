@@ -10,6 +10,7 @@ import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.methods.tabs.Tabs;
 import org.dreambot.api.methods.trade.Trade;
 import org.dreambot.api.methods.walking.impl.Walking;
+import org.dreambot.api.methods.world.Worlds;
 import org.dreambot.api.randoms.LoginSolver;
 import org.dreambot.api.randoms.RandomEvent;
 import org.dreambot.api.randoms.RandomManager;
@@ -65,7 +66,7 @@ public class WatMule extends AbstractScript implements ChatListener {
                     if(sp.length > 0) {
                         queue.add(sp[1]);
                         Logger.log("Added " + sp[1] + " to mule queue");
-                        String response = "OK|" + Players.getLocal().getName();
+                        String response = "OK|" + Players.getLocal().getName() + "|" + Worlds.getCurrentWorld();
                         byte[] responseBytes = response.getBytes(StandardCharsets.UTF_8);
                         clientSocket.getOutputStream().write(responseBytes);
                     }
