@@ -22,6 +22,7 @@ import org.dreambot.api.script.listener.ChatListener;
 import org.dreambot.api.script.listener.ExperienceListener;
 import org.dreambot.api.utilities.Logger;
 import org.dreambot.api.utilities.Sleep;
+import org.dreambot.api.utilities.Timer;
 import org.dreambot.api.wrappers.widgets.message.Message;
 import org.dreambot.api.wrappers.widgets.message.MessageType;
 
@@ -53,6 +54,7 @@ public class WatMule extends AbstractScript implements ChatListener {
     private static List<String> queue;
     private int goldCollected = 0;
     private String target = "";
+    Timer timer;
 
     private static void handleClient(Socket clientSocket) {
         try {
@@ -132,6 +134,7 @@ public class WatMule extends AbstractScript implements ChatListener {
 
         currentState = State.SETUP;
         queue = new ArrayList<>();
+        timer = new Timer();
     }
 
     @Override
@@ -234,14 +237,36 @@ public class WatMule extends AbstractScript implements ChatListener {
 
     @Override
     public void onPaint(Graphics g) {
-        g.setColor(new Color(204, 187, 154));
-        g.fillRect(7,345, 506,130);
+        // Enable anti-aliasing for smoother text
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-        g.setColor(Color.BLACK);
-        g.setFont(new Font("Verdana", Font.BOLD, 20));
-        g.drawString("WatMule", 43, 377);
+        // Set the font metrics for sizing the chatbox
+        FontMetrics fm = g2d.getFontMetrics();
 
-        g.setFont(new Font("Verdana", Font.BOLD, 15));
-        g.drawString("GP collected: " + simplifyNumber(goldCollected), 43, 403);
+        // Determine the height of each section
+        int sectionHeight = 58;
+
+        // Draw the background
+        g.setColor(new Color(42, 42, 42, 220));
+        int boxWidth = Math.max(400, fm.stringWidth("WatMule: GP collected: " + simplifyNumber(goldCollected)));
+        int boxHeight = 2 * sectionHeight;
+        g.fillRect(0, 0, boxWidth, boxHeight);
+
+        // Draw the border
+        g.setColor(new Color(107, 107, 107));
+        g.drawRect(0, 0, boxWidth, boxHeight);
+
+        // Draw the title
+        g.setColor(new Color(220, 220, 220));
+        g.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        g.drawString("WatMule", 15, 30);
+        g.drawLine(15, 42, boxWidth - 15, 42);
+
+        // Draw the GP collected information
+        g.setColor(new Color(220, 220, 220));
+        g.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        g.drawString("GP collected: " + simplifyNumber(goldCollected), 15, 70);
+        g.drawString("Runtime: " + Timer.formatTime(timer.elapsed()), boxWidth / 2, 70);
     }
 }
