@@ -260,7 +260,7 @@ public class WatMule extends AbstractScript implements ChatListener {
         // Draw the title
         g.setColor(new Color(220, 220, 220));
         g.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        g.drawString("WatMule", 15, 30);
+        g.drawString("WatMule: " + (queue.size() > 0 ? "Processing queue of " + queue.size() : "Waiting"), 15, 30);
         g.drawLine(15, 42, boxWidth - 15, 42);
 
         // Draw the GP collected information
