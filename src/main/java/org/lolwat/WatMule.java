@@ -237,6 +237,10 @@ public class WatMule extends AbstractScript implements ChatListener {
 
     @Override
     public void onPaint(Graphics g) {
+        // Calculate average GP per hour
+        double hours = timer.elapsed() / 3600000.0; // convert milliseconds to hours
+        double avgGpPerHour = (hours > 0) ? goldCollected / hours : 0;
+
         // Enable anti-aliasing for smoother text
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -267,6 +271,7 @@ public class WatMule extends AbstractScript implements ChatListener {
         g.setColor(new Color(220, 220, 220));
         g.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         g.drawString("GP collected: " + simplifyNumber(goldCollected), 15, 70);
+        g.drawString("GP per hour: " + simplifyNumber(avgGpPerHour), 15, 90); // New line for GP per hour
         g.drawString("Runtime: " + Timer.formatTime(timer.elapsed()), boxWidth / 2, 70);
     }
 }
