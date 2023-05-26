@@ -87,6 +87,7 @@ public class WatMule extends AbstractScript implements ChatListener {
 
     private ServerSocket serverSocket;
     private ExecutorService executorService;
+    private int tradeCount = 0;
 
     @Override
     public void onMessage(Message m) {
@@ -187,6 +188,7 @@ public class WatMule extends AbstractScript implements ChatListener {
                                     Sleep.sleepUntil(() -> !Trade.isOpen(), 2000);
                                     queue.remove(target);
                                     target = "";
+                                    tradeCount++; // Increment the trade count
                                     return 1;
                                 }
                             }
@@ -273,5 +275,8 @@ public class WatMule extends AbstractScript implements ChatListener {
         g.drawString("GP collected: " + simplifyNumber(goldCollected), 15, 70);
         g.drawString("GP per hour: " + simplifyNumber(avgGpPerHour), 15, 90); // New line for GP per hour
         g.drawString("Runtime: " + Timer.formatTime(timer.elapsed()), boxWidth / 2, 70);
+
+        // Draw the trade count information
+        g.drawString("Trades: " + tradeCount, boxWidth / 2, 90);
     }
 }
